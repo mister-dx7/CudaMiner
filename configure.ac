@@ -52,6 +52,9 @@ case $target in
     have_x86=true
     have_x86_64=true
     ;;
+  arm*)
+    have_arm=true
+    ;;
 esac
 
 PTHREAD_FLAGS="-pthread"
@@ -67,6 +70,7 @@ esac
 
 if test x$have_x86 = xtrue
 then
+  SIMD_FLAGS="-msse2"
   AC_MSG_CHECKING(whether we can compile AVX code)
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("vmovdqa %ymm0, %ymm1");])],
     AC_DEFINE(USE_AVX, 1, [Define to 1 if AVX assembly is available.])
@@ -91,6 +95,10 @@ then
     AC_MSG_RESULT(no)
     AC_MSG_WARN([The assembler does not support the AVX instruction set.])
   )
+fi
+if test x$have_arm = xtrue
+then
+  SIMD_FLAGS="-mfpu=neon -DNEON"
 fi
 
 AC_CHECK_LIB(jansson, json_loads, request_jansson=false, request_jansson=true)
@@ -119,6 +127,7 @@ LIBCURL_CHECK_CONFIG(, 7.15.2, ,
   [AC_MSG_ERROR([Missing required libcurl >= 7.15.2])])
 
 AC_SUBST(JANSSON_LIBS)
+AC_SUBST(SIMD_FLAGS)
 AC_SUBST(PTHREAD_FLAGS)
 AC_SUBST(PTHREAD_LIBS)
 AC_SUBST(WS2_LIBS)

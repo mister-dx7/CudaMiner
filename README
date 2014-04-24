@@ -1,9 +1,22 @@
 
-IMPORTANT PUBLIC SERVICE ANNOUNCEMENT:
+This repo provides a CudaMiner version that runs on ARM based boards.
 
-This has recently been ugpraded to use the CUDA 5.5 toolkit.
+Currently, it supports:
+	-  Kayla board [https://developer.nvidia.com/content/kayla-platform].
 
-If you keep using CUDA 5.0, you will not see the amazing 30%
-speed gains with David Andersen's new Kepler, Titan kernels.
+The code compiles in the following environment:
+	- OS: Ubuntu 12.04 with kernel 3.1.10-carma
+	- GCC: 4.6.3 arm-linux-gnueabihf
+	- CUDA: 6.0
 
-Also see README.txt
+Changes:
+	- scrypt.cpp
+		- adding NEON support
+	- sha2.c
+		- remove EXTERN_SHA256
+	- configure.ac
+		- adding SIMD_FLAGS and checking ARM target
+	- Makefile.am
+		- adding SIMD_FLAGS (replacing default -msse2)
+
+For more info on running cudaminer, see README.txt
