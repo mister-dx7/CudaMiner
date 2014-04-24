@@ -1,5 +1,6 @@
 
-This repo provides a CudaMiner version that runs on ARM based boards.
+This repo provides a CudaMiner version that runs on ARM based boards, 
+while maintaining the compatibility with x86/64 systems.
 
 Currently, it supports:
 	-  Kayla board [https://developer.nvidia.com/content/kayla-platform].
@@ -18,5 +19,9 @@ Changes:
 		- adding SIMD_FLAGS and checking ARM target
 	- Makefile.am
 		- adding SIMD_FLAGS (replacing default -msse2)
+
+To configure and compile cudaminer, run the following commands:
+   ./configure.sh
+   make
 
 For more info on running cudaminer, see README.txt
